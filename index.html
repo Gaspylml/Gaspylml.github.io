@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>☾ nuestro universo ✩</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Edu NSW ACT Cursive";
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('fondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: 0;
+        }
+
+        body > *:not(.fondo) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .flor {
+            width: 150px;
+            height: 150px;
+            background: url('Tulipan.png') no-repeat center;
+            background-size: contain;
+            transition: transform 1s ease;
+            cursor: pointer;
+        }
+
+            .flor.abierta {
+                transform: scale(1.3) rotate(20deg);
+            }
+
+        .mensaje {
+            opacity: 0;
+            margin-top: 20px;
+            font-size: 1.4rem;
+            color: #ffffff;
+            transition: opacity 1s ease;
+        }
+
+            .mensaje.visible {
+                opacity: 1;
+            }
+
+        .volumen {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #volumenSlider {
+            width: 100px;
+            accent-color: #d14ba6;
+            cursor: pointer;
+        }
+
+        @keyframes latido {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .volumen img.latir {
+            animation: latido 0.4s ease;
+        }
+
+        .qr {
+            position: fixed;
+            bottom: 20px;
+            width: 80px;
+            z-index: 2;
+        }
+
+        .qr-izquierdo {
+            left: 400px;
+            transform: none;
+        }
+
+        .qr-derecho {
+            right: 400px;
+            transform: none;
+        }
+
+        /* Texto encima de cada QR */
+        .qr-text {
+            position: fixed;
+            bottom: 10px; /* un poco arriba del QR */
+            font-size: 1rem;
+            color: white;
+            text-shadow: 0 0 5px black;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .qr-text-izquierdo {
+            left: 400px;
+        }
+
+        .qr-text-derecho {
+            right: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="fondo"></div>
+
+    <!-- Textos arriba de los QR -->
+    <div class="qr-text qr-text-izquierdo">Poema para ti</div>
+    <div class="qr-text qr-text-derecho">Algo Escrito para ti</div>
+
+    <!-- Códigos QR -->
+    <img src="qr1.jpg" alt="QR Izquierdo" class="qr qr-izquierdo">
+    <img src="qr2.jpg" alt="QR Derecho" class="qr qr-derecho">
+
+    <div class="flor" id="flor"></div>
+    <div class="mensaje" id="mensaje">"✩ voy a darte todos los besos que no te di en todos los años que no te conocí. ✩"</div>
+    <div class="volumen">
+        <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+             alt="Corazón Volumen"
+             width="32"
+             title="Volumen" />
+        <input type="range" id="volumenSlider" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <audio id="musica" loop autoplay>
+        <source src="Eres.mp3" type="audio/mp3" />
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
+    <script>
+        const flor = document.getElementById("flor");
+        const mensaje = document.getElementById("mensaje");
+        const musica = document.getElementById("musica");
+        const volumenSlider = document.getElementById("volumenSlider");
+        const corazon = document.querySelector(".volumen img");
+
+        flor.addEventListener("click", () => {
+            flor.classList.add("abierta");
+            mensaje.classList.add("visible");
+            musica.play();
+        });
+
+        volumenSlider.addEventListener("input", () => {
+            musica.volume = volumenSlider.value;
+            corazon.classList.add("latir");
+            setTimeout(() => corazon.classList.remove("latir"), 400);
+        });
+
+        musica.volume = volumenSlider.value;
+    </script>
+</body>
+</html>
